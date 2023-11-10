@@ -16,6 +16,23 @@ NO_RES_PRO = 317
 Cij_CUTOFF = 0.5
 GRAPH_COLOR = 'honeydew'
 
+# Paths to be Mapped
+# all output will be saved to the following location
+GROUP_FOLD = 'atp_to_pl1'
+
+chain1 = 'A'
+chain2 = 'F'
+
+# 2 Positions in ATP pocket 
+group_mon1 = ['{}235'.format(chain1)]
+
+# 2 Positions in PL2
+group_mon2 = ['{}312'.format(chain2)]
+
+# If you want to take paths between a larger group, just include a longer list for looping
+#group_mon2 = ['{}739'.format(chain2), '{}740'.format(chain2), '{}741'.format(chain2), '{}742'.format(chain2),'{}743'.format(chain2), '{}744'.format(chain2), '{}745'.format(chain2), '{}746'.format(chain2), '{}747'.format(chain2), '{}748'.format(chain2), '{}749'.format(chain2), '{}750'.format(chain2), '{}751'.format(chain2), '{}752'.format(chain2), '{}753'.format(chain2), '{}754'.format(chain2), '{}755'.format(chain2), '{}756'.format(chain2)]
+
+
 ####################################################################################################
 # This section Filters the left over pairs with a specified Cij cutoff for the Graph Network
 ####################################################################################################
@@ -167,25 +184,15 @@ def k_shortest_paths(G, source, target, k):
         islice(nx.shortest_simple_paths(G, source, target, weight='weight'), k)
     )
 
-# Groups to be Mapped
-# all output will be saved to the following location
-GROUP_FOLD = 'atp_to_pl1'
-
-chain1 = 'A'
-chain2 = 'F'
-
-# 2 Positions in ATP pocket 
-group_mon1 = ['{}235'.format(chain1)]
-
-# 2 Positions in PL2
-group_mon2 = ['{}312'.format(chain2)]
-
-# If you want to take paths between a larger group, just include a longer list for looping
-#group_mon2 = ['{}739'.format(chain2), '{}740'.format(chain2), '{}741'.format(chain2), '{}742'.format(chain2),'{}743'.format(chain2), '{}744'.format(chain2), '{}745'.format(chain2), '{}746'.format(chain2), '{}747'.format(chain2), '{}748'.format(chain2), '{}749'.format(chain2), '{}750'.format(chain2), '{}751'.format(chain2), '{}752'.format(chain2), '{}753'.format(chain2), '{}754'.format(chain2), '{}755'.format(chain2), '{}756'.format(chain2)]
-
 # Changable values for evaluating 
 no_paths = 20000
 my_bins = 50
+
+ifExists = os.path.exists(GROUP_FOLD)
+if not ifExists:
+    os.makedirs(GROUP_FOLD)
+    print('~ {} directory created ~'.format(GROUP_FOLD)
+    
 ####################################################################################################
 # Make File to hold the paths to evaluate the node degeneracy
 if os.path.exists('./{0}/{1}_Cij_{2}cutoff_{0}_dijkstra_paths.txt'.format(GROUP_FOLD, PROT_STATE, Cij_CUTOFF)):
