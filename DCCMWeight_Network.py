@@ -139,7 +139,7 @@ print('No. of Network Edges: ', GRAPH.number_of_edges())
 if os.path.exists('{0}_Cij_{1}cutoff_PSG_Betweeness.txt'.format(PROT_STATE, Cij_CUTOFF)):
     os.remove('{0}_Cij_{1}cutoff_PSG_Betweeness.txt'.format(PROT_STATE, Cij_CUTOFF))
 
-betweeness = nx.betweenness_centrality(GRAPH, normalized=True, endpoints=True)
+betweeness = nx.betweenness_centrality(GRAPH, normalized=True, weight='weight', endpoints=True)
 with open ('{0}_Cij_{1}cutoff_Betweeness.txt'.format(PROT_STATE, Cij_CUTOFF), 'w') as f:
     f.write('# PSG Betweeness Centrality \n# Node, Betweeness\n')
     for key, value in betweeness.items():
